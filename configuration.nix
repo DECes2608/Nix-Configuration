@@ -39,6 +39,8 @@ let
     "appindicator"         # tepsi ikonları (Steam, blueman vb.)
     "clipboard-indicator"  # pano geçmişi
     "caffeine"             # ekranın kapanmasını geçici engelle
+    "blur-my-shell"
+    "rounded-window-corners-reborn"
   ]);
 in
 {
@@ -144,7 +146,7 @@ in
     git
     kitty
     libreoffice
-    dotnet-sdk
+    dotnet-sdk_10
     vscode
     gnome-tweaks
 
@@ -287,6 +289,12 @@ in
         intellihide = false;
         extend-height = false;
       };
+"org/gnome/shell/extensions/blur-my-shell/applications" = {
+  blur = true;
+  enable-all = false;
+  whitelist = [ "kitty" ];
+  sigma = lib.gvariant.mkInt32 30;
+};
     };
   }];
 
