@@ -40,14 +40,14 @@ let
     "clipboard-indicator"  # pano geçmişi
     "caffeine"             # ekranın kapanmasını geçici engelle
     "blur-my-shell"
-    "rounded-window-corners-reborn"
   ]);
 in
 {
   imports = [ ./hardware-configuration.nix ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+   boot.loader.systemd-boot.enable = true;
+   boot.loader.efi.canTouchEfiVariables = true;
+
 
   # Ryzen AI 7 350 (yeni çip) için güncel kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -58,7 +58,6 @@ in
   # BLUETOOTH
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
-  services.blueman.enable = true;
 
   time.timeZone = "Europe/Istanbul";
 
@@ -109,7 +108,7 @@ in
 
   users.users."deces" = {
     isNormalUser = true;
-    description = "deniz";
+    description = "Deniz Efe Cesur";
     shell = pkgs.fish;
     extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
@@ -138,7 +137,6 @@ in
   # ---------------------------------------------------------------
   environment.systemPackages = with pkgs; [
     wget
-    librewolf
     brave
     neovim
     gcc
@@ -149,6 +147,7 @@ in
     dotnet-sdk_10
     vscode
     gnome-tweaks
+    prismlauncher
 
     # flex
     fastfetch
@@ -174,6 +173,10 @@ in
     gnumake
     wl-clipboard
     clang-tools        # clangd (C/C++ LSP)
+
+    # Oyun Extras
+    mangohud        # FPS/CPU/GPU overlay
+    goverlay        # mangohud ayarları için GUI
 
     # Medya, belge, kitap
     mpv                # video/ses
@@ -273,6 +276,9 @@ in
     dedicatedServer.openFirewall = true;
   };
 
+  programs.gamemode.enable = true;     # oyun sırasında CPU governor/öncelik optimizasyonu
+  programs.gamescope.enable = true;    # çözünürlük ölçekleme, FSR, FPS limiti
+
   # ---------------------------------------------------------------
   # GNOME uzantıları ve dock ayarı
   # ---------------------------------------------------------------
@@ -289,12 +295,6 @@ in
         intellihide = false;
         extend-height = false;
       };
-"org/gnome/shell/extensions/blur-my-shell/applications" = {
-  blur = true;
-  enable-all = false;
-  whitelist = [ "kitty" ];
-  sigma = lib.gvariant.mkInt32 30;
-};
     };
   }];
 
